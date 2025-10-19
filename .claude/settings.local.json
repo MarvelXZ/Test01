@@ -6,7 +6,13 @@
       "Bash(docker-compose down)",
       "Bash(docker-compose up -d --build)",
       "Bash(docker logs test01-app)",
-      "Bash(git add .)"
+      "Bash(git add .)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nInitial commit: Docker aplikacija sa Cloudflare Workers podrškom\n\n- Dodat Express server koji radi na portu 5000\n- Kreirana Docker konfiguracija (Dockerfile i docker-compose.yml)\n- Dodata dokumentacija u README.md\n- Aplikacija spremna za deploy na Cloudflare Workers\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git config user.name \"MarvelXZ\")",
+      "Bash(git config user.email \"marvelxz@users.noreply.github.com\")",
+      "Bash(git push -u origin master)",
+      "Bash(git commit -m \"Dodana Cloudflare Workers podrška\n\n- Kreiran worker.js sa istim dizajnom kao Docker verzija\n- Dodat wrangler.toml za konfiguraciju\n- Ažuriran package.json sa Wrangler zavisnošću i skriptama\n- Ažuriran README.md sa instrukcijama za deployment\n- Dodat .gitignore fajl\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\")",
+      "Bash(git push)"
     ],
     "deny": [],
     "ask": []

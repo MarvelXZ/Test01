@@ -1,12 +1,17 @@
 {
   "name": "test01",
   "version": "1.0.0",
-  "description": "Test Docker project",
+  "description": "Test Docker project with Cloudflare Workers support",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "deploy": "wrangler deploy",
+    "dev:worker": "wrangler dev"
   },
   "dependencies": {
     "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
   }
 }
