@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
           align-items: center;
           height: 100vh;
           margin: 0;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          background: linear-gradient(135deg, #ff6b6b 0%, #c92a2a 100%);
           color: white;
         }
         .container {
