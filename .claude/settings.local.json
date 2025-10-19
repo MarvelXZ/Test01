@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git init)",
+      "Bash(git remote add origin https://github.com/MarvelXZ/Test01.git)",
+      "Bash(docker-compose down)",
+      "Bash(docker-compose up -d --build)",
+      "Bash(docker logs test01-app)",
+      "Bash(git add .)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

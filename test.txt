@@ -1,0 +1,5 @@
+Ovo je test fajl.
+
+Kreirano: 2025-10-19
+
+Testni sadržaj za demonstraciju.
