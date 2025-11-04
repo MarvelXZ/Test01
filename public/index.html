@@ -3,56 +3,431 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Test01 - Cloudflare Pages</title>
+  <title>MobileShop - Prodaja Mobilnih Telefona</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+    * {
       margin: 0;
-      background: linear-gradient(135deg, #ff6b6b 0%, #c92a2a 100%);
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .header {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 25px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .header h1 {
+      color: #667eea;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      color: #666;
+      font-size: 1.1rem;
+    }
+
+    .filters {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 20px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .filter-btn {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+
+    .filter-btn:hover {
+      background: #764ba2;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .filter-btn.active {
+      background: #764ba2;
+      box-shadow: 0 5px 15px rgba(118, 75, 162, 0.4);
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 25px;
+      margin-bottom: 30px;
+    }
+
+    .product-card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .product-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 250px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 4rem;
+    }
+
+    .product-brand {
+      color: #667eea;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .product-name {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 12px;
+    }
+
+    .product-specs {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+      line-height: 1.6;
+    }
+
+    .product-price {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #764ba2;
+      margin-bottom: 15px;
+    }
+
+    .old-price {
+      text-decoration: line-through;
+      color: #999;
+      font-size: 1.2rem;
+      margin-left: 10px;
+    }
+
+    .discount-badge {
+      display: inline-block;
+      background: #ff6b6b;
+      color: white;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-left: 10px;
+    }
+
+    .stock-status {
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: 15px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .in-stock {
+      background: #51cf66;
       color: white;
     }
-    .container {
-      text-align: center;
-      padding: 2rem;
-      background: rgba(255, 255, 255, 0.1);
+
+    .low-stock {
+      background: #ffa94d;
+      color: white;
+    }
+
+    .buy-btn {
+      width: 100%;
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 15px;
       border-radius: 10px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
-    h1 { margin: 0 0 1rem 0; }
-    p { font-size: 1.2rem; margin: 0.5rem 0; }
-    .badge {
-      display: inline-block;
-      background: rgba(255, 255, 255, 0.2);
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      margin-top: 1rem;
-      font-size: 0.9rem;
+
+    .buy-btn:hover {
+      background: #764ba2;
+      transform: scale(1.05);
     }
-    .time {
+
+    .stats {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      text-align: center;
+    }
+
+    .stat-item h3 {
+      color: #667eea;
+      font-size: 2.5rem;
+      margin-bottom: 8px;
+    }
+
+    .stat-item p {
+      color: #666;
       font-size: 1rem;
-      opacity: 0.9;
+    }
+
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 1.8rem;
+      }
+
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .filters {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>⚡ Cloudflare Pages Aplikacija</h1>
-    <p>Test01 Project</p>
-    <p>Pokrenut na Cloudflare Edge Network</p>
-    <p class="time" id="time"></p>
-    <div class="badge">Powered by Cloudflare Pages</div>
+  <div class="header">
+    <h1>📱 MobileShop</h1>
+    <p>Vaša destinacija za najbolje mobilne telefone po sjajnim cenama</p>
   </div>
+
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all">Svi Telefoni</button>
+    <button class="filter-btn" data-filter="samsung">Samsung</button>
+    <button class="filter-btn" data-filter="apple">Apple</button>
+    <button class="filter-btn" data-filter="xiaomi">Xiaomi</button>
+    <button class="filter-btn" data-filter="discount">Na Akciji</button>
+  </div>
+
+  <div class="products-grid" id="productsGrid">
+    <!-- Products will be inserted here by JavaScript -->
+  </div>
+
+  <div class="stats">
+    <div class="stat-item">
+      <h3>500+</h3>
+      <p>Zadovoljnih Kupaca</p>
+    </div>
+    <div class="stat-item">
+      <h3>50+</h3>
+      <p>Modela Telefona</p>
+    </div>
+    <div class="stat-item">
+      <h3>24/7</h3>
+      <p>Podrška Korisnicima</p>
+    </div>
+    <div class="stat-item">
+      <h3>⭐ 4.8</h3>
+      <p>Prosečna Ocena</p>
+    </div>
+  </div>
+
   <script>
-    function updateTime() {
-      document.getElementById('time').textContent = 'Vreme: ' + new Date().toLocaleString('sr-RS');
+    const products = [
+      {
+        id: 1,
+        brand: 'Samsung',
+        name: 'Galaxy S24 Ultra',
+        specs: '12GB RAM • 256GB • 200MP Camera • 5000mAh',
+        price: 129990,
+        oldPrice: 149990,
+        discount: 13,
+        stock: 'in-stock',
+        emoji: '📱',
+        category: 'samsung'
+      },
+      {
+        id: 2,
+        brand: 'Apple',
+        name: 'iPhone 15 Pro Max',
+        specs: '8GB RAM • 256GB • A17 Pro • ProMotion 120Hz',
+        price: 159990,
+        oldPrice: 179990,
+        discount: 11,
+        stock: 'low-stock',
+        emoji: '🍎',
+        category: 'apple'
+      },
+      {
+        id: 3,
+        brand: 'Xiaomi',
+        name: 'Xiaomi 14 Pro',
+        specs: '12GB RAM • 512GB • Leica Camera • 120W Charging',
+        price: 89990,
+        oldPrice: null,
+        discount: 0,
+        stock: 'in-stock',
+        emoji: '📲',
+        category: 'xiaomi'
+      },
+      {
+        id: 4,
+        brand: 'Samsung',
+        name: 'Galaxy Z Fold 5',
+        specs: '12GB RAM • 512GB • Foldable • S Pen Support',
+        price: 179990,
+        oldPrice: 199990,
+        discount: 10,
+        stock: 'in-stock',
+        emoji: '📱',
+        category: 'samsung'
+      },
+      {
+        id: 5,
+        brand: 'Apple',
+        name: 'iPhone 14 Pro',
+        specs: '6GB RAM • 128GB • A16 Bionic • Dynamic Island',
+        price: 119990,
+        oldPrice: 139990,
+        discount: 14,
+        stock: 'in-stock',
+        emoji: '🍎',
+        category: 'apple'
+      },
+      {
+        id: 6,
+        brand: 'Xiaomi',
+        name: 'Redmi Note 13 Pro',
+        specs: '8GB RAM • 256GB • 200MP Camera • 67W Charging',
+        price: 39990,
+        oldPrice: null,
+        discount: 0,
+        stock: 'in-stock',
+        emoji: '📲',
+        category: 'xiaomi'
+      },
+      {
+        id: 7,
+        brand: 'Samsung',
+        name: 'Galaxy A54 5G',
+        specs: '8GB RAM • 256GB • 50MP Camera • 5000mAh',
+        price: 49990,
+        oldPrice: 59990,
+        discount: 17,
+        stock: 'low-stock',
+        emoji: '📱',
+        category: 'samsung'
+      },
+      {
+        id: 8,
+        brand: 'Apple',
+        name: 'iPhone 13',
+        specs: '4GB RAM • 128GB • A15 Bionic • Dual Camera',
+        price: 79990,
+        oldPrice: 89990,
+        discount: 11,
+        stock: 'in-stock',
+        emoji: '🍎',
+        category: 'apple'
+      },
+      {
+        id: 9,
+        brand: 'Xiaomi',
+        name: 'Poco F5 Pro',
+        specs: '12GB RAM • 256GB • Snapdragon 8+ Gen 1',
+        price: 59990,
+        oldPrice: null,
+        discount: 0,
+        stock: 'in-stock',
+        emoji: '📲',
+        category: 'xiaomi'
+      }
+    ];
+
+    function formatPrice(price) {
+      return price.toLocaleString('sr-RS') + ' RSD';
     }
-    updateTime();
-    setInterval(updateTime, 1000);
+
+    function renderProducts(filter = 'all') {
+      const grid = document.getElementById('productsGrid');
+      let filteredProducts = products;
+
+      if (filter === 'discount') {
+        filteredProducts = products.filter(p => p.discount > 0);
+      } else if (filter !== 'all') {
+        filteredProducts = products.filter(p => p.category === filter);
+      }
+
+      grid.innerHTML = filteredProducts.map(product => `
+        <div class="product-card" data-category="${product.category}">
+          <div class="product-image">${product.emoji}</div>
+          <div class="product-brand">${product.brand}</div>
+          <div class="product-name">${product.name}</div>
+          <div class="product-specs">${product.specs}</div>
+          <div class="stock-status ${product.stock === 'in-stock' ? 'in-stock' : 'low-stock'}">
+            ${product.stock === 'in-stock' ? '✓ Na stanju' : '⚠ Ograničena količina'}
+          </div>
+          <div class="product-price">
+            ${formatPrice(product.price)}
+            ${product.oldPrice ? `<span class="old-price">${formatPrice(product.oldPrice)}</span>` : ''}
+            ${product.discount > 0 ? `<span class="discount-badge">-${product.discount}%</span>` : ''}
+          </div>
+          <button class="buy-btn" onclick="buyProduct(${product.id}, '${product.name}')">
+            Dodaj u korpu 🛒
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function buyProduct(id, name) {
+      alert(`Proizvod "${name}" je dodat u korpu! 🎉\n\nNastavite sa kupovinom ili pređite na plaćanje.`);
+    }
+
+    // Filter functionality
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const filter = this.getAttribute('data-filter');
+        renderProducts(filter);
+      });
+    });
+
+    // Initial render
+    renderProducts();
   </script>
 </body>
 </html>
